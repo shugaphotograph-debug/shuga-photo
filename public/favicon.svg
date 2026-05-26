@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- TODO: 実際のファビコン画像に差し替えてください -->
+  <rect width="32" height="32" rx="4" fill="#111111"/>
+  <!-- カメラ本体 -->
+  <rect x="5" y="10" width="22" height="15" rx="2" stroke="white" stroke-width="1.5" fill="none"/>
+  <!-- レンズ -->
+  <circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.5" fill="none"/>
+  <circle cx="16" cy="17" r="2" fill="white" opacity="0.3"/>
+  <!-- ポップアップ部分 -->
+  <path d="M11 10V8.5C11 7.67 11.67 7 12.5 7h7C20.33 7 21 7.67 21 8.5V10" stroke="white" stroke-width="1.5"/>
+  <!-- ファインダー -->
+  <rect x="22" y="12" width="3" height="2" rx="0.5" fill="white" opacity="0.6"/>
+</svg>

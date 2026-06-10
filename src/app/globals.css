@@ -3,25 +3,12 @@
 @tailwind utilities;
 
 html {
+  /* アンカーリンクのスムーズスクロール */
   scroll-behavior: smooth;
 }
 
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* カスタムスクロールバー（Webkit） */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #fafaf9;
-}
-::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

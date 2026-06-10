@@ -1,166 +1,113 @@
-# Shuga Photo — Photographer Portfolio
+# SHUGA PHOTOGRAPHY — Portfolio
 
-バレエ・音楽発表会・イベント撮影専門フォトグラファーのポートフォリオサイトです。
+東京を拠点にバレエ・音楽発表会を専門に撮影するイベント写真家の、1ページ完結（LP型）ポートフォリオサイトです。
 
 ## 技術スタック
 
 | 項目 | 内容 |
 |------|------|
-| フレームワーク | Next.js 14 (App Router) |
+| フレームワーク | Next.js 14 (App Router) ・静的エクスポート（`output: 'export'`） |
 | 言語 | TypeScript |
 | スタイル | Tailwind CSS |
 | フォント | Noto Sans JP (Google Fonts) |
-| デプロイ | GitHub Pages（静的エクスポート） |
+| 画像ホスティング | Cloudflare R2（初期はプレースホルダ画像） |
+| デプロイ | Cloudflare Pages（GitHub連携の自動デプロイ） |
 
----
-
-## ローカル開発
-
-### 1. 依存パッケージのインストール
+## ローカルでの確認方法
 
 ```bash
-npm install
+npm install        # 初回のみ
+npm run dev        # 開発サーバー → http://localhost:3000
+npm run build      # 静的ビルド → out/ に生成される
 ```
 
-### 2. 開発サーバー起動
+`npm run build` 後に `out/index.html` が生成されていればOKです。
+ビルド結果をそのまま確認したい場合は `npx serve out` などで `out/` を配信してください。
 
-```bash
-npm run dev
-```
+## Cloudflare Pages の設定
 
-ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
+GitHub連携でリポジトリを接続し、以下を設定します。
 
-### 3. 静的ビルド（ローカル確認）
+| 項目 | 値 |
+|------|-----|
+| Build command | `npm run build` |
+| Build output directory | `out` |
 
-```bash
-npm run build
-```
+## 編集箇所まとめ
 
-`out/` ディレクトリに静的ファイルが生成されます。
+### 1. R2 の実画像に差し替える — `src/data/gallery.ts`
 
----
-
-## GitHub Pages へのデプロイ
-
-### ステップ 1 — リポジトリ名の設定
-
-`next.config.js` の先頭にある定数をリポジトリ名に変更します。
-
-```js
-// next.config.js
-const REPO_NAME = 'your-repo-name'; // ← リポジトリ名に変更
-```
-
-### ステップ 2 — GitHubにプッシュ
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/<username>/<repo-name>.git
-git push -u origin main
-```
-
-### ステップ 3 — GitHub Pages の有効化
-
-1. リポジトリの **Settings** タブを開く
-2. サイドバーの **Pages** をクリック
-3. **Build and deployment** → **Source** を **`GitHub Actions`** に変更
-
-`main` ブランチへの次のプッシュ（または Actions タブから手動実行）でデプロイが走り、
-`https://<username>.github.io/<repo-name>/` でサイトが公開されます。
-
----
-
-## カスタマイズ
-
-### サイト名・メタ情報の変更
-
-| ファイル | 変更箇所 |
-|----------|---------|
-| `src/app/layout.tsx` | `metadata`（title・description） |
-| `src/components/Header.tsx` | サイト名文字列 |
-| `src/components/Footer.tsx` | コピーライト文字列 |
-
-### Googleフォームの埋め込み
-
-`src/app/contact/page.tsx` の定数を差し替えます。
-
-```tsx
-// src/app/contact/page.tsx
-const GOOGLE_FORM_EMBED_URL =
-  'https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true';
-```
-
-**Googleフォームの埋め込みURLの取得方法：**
-1. Googleフォームを開く
-2. 右上の「送信」ボタンをクリック
-3. `<>` （埋め込み）タブを選択
-4. iframeの `src` 属性のURLをコピー
-
-### ギャラリー画像の差し替え
-
-`src/data/gallery.ts` の各画像の `src` を実際の写真パスに変更します。
+1. `next.config.js` の `images.remotePatterns` に R2 の公開ドメインを設定
+   （`*.r2.dev` は設定済み。カスタムドメインを使う場合は追加）
+2. `src/data/gallery.ts` 冒頭の `R2_BASE_URL` を実際の公開URLに変更
+3. 各画像の `src` を `r2('ファイル名.jpg')` に変更し、`width` / `height` を実画像の縦横比に合わせる
+   （masonry グリッドとライトボックスの表示比率に使われます）
 
 ```ts
-// ローカルファイルの場合
-src: '/images/ballet-01.jpg',
+// src/data/gallery.ts
+export const R2_BASE_URL = 'https://pub-xxxxxxxx.r2.dev'; // ← R2の公開URL
 
-// 外部URLの場合
-src: 'https://example.com/photo.jpg',
+{
+  id: 'ballet-01',
+  src: r2('ballet-01.jpg'),   // ← picsum のURLから差し替え
+  alt: 'バレエ発表会 ソロヴァリエーションの跳躍の瞬間',
+  category: 'ballet',
+  width: 800,                 // ← 実画像の比率に合わせる
+  height: 1200,
+},
 ```
 
-> `public/images/` ディレクトリに画像ファイルを置き、`src: '/images/ファイル名.jpg'` と指定します。
+### 2. サイト名・SNSリンク・問い合わせ先 — `src/data/site.ts`
 
-### 料金プランの更新
-
-`src/data/services.ts` の `price` フィールドを実際の料金に更新します。
+サイト名・キャッチコピー・肩書き・メールアドレス・SNSリンク（Instagram / X）・
+OGP用のサイトURL / OG画像は、すべて `src/data/site.ts` にまとまっています。
 
 ```ts
-price: '¥30,000〜',
+// src/data/site.ts
+contactEmail: 'shuga.photograph@gmail.com',
+contactFormUrl: '',  // GoogleフォームなどのURLを入れるとボタンが表示される
+sns: {
+  instagram: 'https://www.instagram.com/your_account/',
+  x: 'https://x.com/your_account/',
+},
 ```
 
----
+### 3. 文章（自己紹介・サービス内容）
+
+| ファイル | 内容 |
+|----------|------|
+| `src/components/About.tsx` | 自己紹介文（仮テキスト） |
+| `src/components/Services.tsx` | サービス紹介の文言 |
 
 ## ディレクトリ構成
 
 ```
 photographer-portfolio/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # GitHub Actions ワークフロー
 ├── public/
 │   └── favicon.svg             # ファビコン（要差し替え）
 ├── src/
 │   ├── app/
-│   │   ├── globals.css         # グローバルスタイル
-│   │   ├── layout.tsx          # ルートレイアウト（フォント・メタ情報）
-│   │   ├── page.tsx            # トップページ
-│   │   ├── works/
-│   │   │   └── page.tsx        # ギャラリーページ（ライトボックス付き）
-│   │   ├── service/
-│   │   │   └── page.tsx        # 料金・サービスページ
-│   │   └── contact/
-│   │       └── page.tsx        # お問い合わせページ（Googleフォーム埋め込み）
+│   │   ├── globals.css         # グローバルスタイル（スムーズスクロール）
+│   │   ├── layout.tsx          # ルートレイアウト（フォント・メタ情報・OGP）
+│   │   └── page.tsx            # 1ページ完結のトップページ
 │   ├── components/
-│   │   ├── Header.tsx          # ヘッダー（スクロールエフェクト・ハンバーガーメニュー）
+│   │   ├── Header.tsx          # 固定ヘッダー（アンカーナビ・ハンバーガーメニュー）
+│   │   ├── Hero.tsx            # 導入（テキスト主体）
+│   │   ├── Gallery.tsx         # ギャラリー（カテゴリタブ・masonry）
+│   │   ├── Lightbox.tsx        # ライトボックス（自前実装）
+│   │   ├── About.tsx           # 自己紹介
+│   │   ├── Services.tsx        # サービス概要
+│   │   ├── Contact.tsx         # 問い合わせ・SNSリンク
 │   │   ├── Footer.tsx          # フッター
-│   │   ├── Lightbox.tsx        # ライトボックス（外部ライブラリ不使用）
-│   │   └── FAQAccordion.tsx    # FAQアコーディオン
+│   │   └── FadeIn.tsx          # スクロールフェードイン（IntersectionObserver）
 │   └── data/
-│       ├── gallery.ts          # ギャラリー画像データ
-│       ├── services.ts         # 料金プラン・撮影フローデータ
-│       └── faq.ts              # FAQデータ
-├── next.config.js              # Next.js設定（basePath・静的エクスポート）
-├── tailwind.config.ts          # Tailwind CSS設定
-├── tsconfig.json               # TypeScript設定
-└── README.md
+│       ├── site.ts             # ★ サイト設定（名前・SNS・問い合わせ先）
+│       └── gallery.ts          # ★ ギャラリー画像データ（R2のURLはここ）
+├── next.config.js              # Next.js設定（静的エクスポート・R2ドメイン許可）
+└── tailwind.config.ts          # Tailwind CSS設定
 ```
-
----
 
 ## ライセンス
 
 本リポジトリのコードは MIT ライセンスです。
-ギャラリーに使用しているダミー画像は [Unsplash](https://unsplash.com) からのものです（実際の写真への差し替えが必要です）。
+ギャラリーのプレースホルダ画像は [Lorem Picsum](https://picsum.photos) を使用しています（実際の写真への差し替えが必要です）。

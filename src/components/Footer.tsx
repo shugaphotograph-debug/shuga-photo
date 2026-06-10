@@ -1,13 +1,11 @@
-export default function Footer() {
-  const year = new Date().getFullYear();
+import { siteConfig } from '@/data/site';
 
+export default function Footer() {
   return (
-    <footer className="border-t border-stone-100 py-10 mt-auto">
-      <div className="max-w-6xl mx-auto px-6 text-center">
-        <p className="text-[10px] tracking-[0.3em] text-stone-400 uppercase">
-          © {year} Shuga Photo. All rights reserved.
-        </p>
-      </div>
+    <footer className="bg-neutral-950 border-t border-neutral-800 px-5 sm:px-8 py-8">
+      <p className="text-center text-[10px] tracking-[0.25em] text-neutral-500">
+        © {new Date().getFullYear()} {siteConfig.siteName}
+      </p>
     </footer>
   );
 }

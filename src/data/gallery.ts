@@ -1,163 +1,172 @@
-export type Category = 'all' | 'ballet' | 'music' | 'event';
+// ===============================================================
+// ギャラリーの画像データはこのファイルにまとまっています。
+//
+// 【R2の実画像に差し替える手順】
+// 1. next.config.js の remotePatterns に R2 の公開ドメインを追加
+//    （例: hostname: 'pub-xxxxxxxx.r2.dev' やカスタムドメイン）
+// 2. 下の R2_BASE_URL を R2 の公開URLに変更
+// 3. 各画像の src を r2(`ファイル名.jpg`) に、width / height を
+//    実画像の縦横比に合わせて変更（masonry表示の比率計算に使用）
+// ===============================================================
+
+// R2 の公開ベースURL（末尾スラッシュなし）。実運用時に差し替えてください。
+export const R2_BASE_URL = 'https://pub-xxxxxxxxxxxxxxxx.r2.dev';
+
+// R2 上のファイル名からURLを組み立てるヘルパー
+export const r2 = (fileName: string): string => `${R2_BASE_URL}/${fileName}`;
+
+export type CategoryId = 'ballet' | 'music';
+
+export interface GalleryCategory {
+  id: CategoryId;
+  label: string;
+}
+
+export const galleryCategories: GalleryCategory[] = [
+  { id: 'ballet', label: 'バレエ' },
+  { id: 'music', label: '音楽発表会' },
+];
 
 export interface GalleryImage {
   id: string;
   src: string;
   alt: string;
-  category: Exclude<Category, 'all'>;
+  category: CategoryId;
   width: number;
   height: number;
 }
 
-// ダミー画像は Unsplash の直リンクを使用しています。
-// 実際の写真に差し替える場合は src を変更してください。
-// public/images/ に画像を置く場合は src: '/images/ファイル名.jpg' に変更。
+// 初期はプレースホルダ画像（picsum.photos）。
+// 実画像に差し替える際は src を r2('xxx.jpg') に変更してください。
 export const galleryImages: GalleryImage[] = [
-  // ── バレエ発表会 ──────────────────────────────────────
+  // ── バレエ ──────────────────────────────────────
   {
-    id: 'ballet-1',
-    src: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80',
-    alt: 'バレエ発表会 - ソロパフォーマンス',
-    category: 'ballet',
-    width: 800,
-    height: 1067,
-  },
-  {
-    id: 'ballet-2',
-    src: 'https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?w=800&q=80',
-    alt: 'バレエ発表会 - 群舞',
-    category: 'ballet',
-    width: 800,
-    height: 534,
-  },
-  {
-    id: 'ballet-3',
-    src: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80',
-    alt: 'バレエ発表会 - バリエーション',
+    id: 'ballet-01',
+    src: 'https://picsum.photos/seed/ballet-01/800/1200',
+    alt: 'バレエ発表会 ソロヴァリエーションの跳躍の瞬間',
     category: 'ballet',
     width: 800,
     height: 1200,
   },
   {
-    id: 'ballet-4',
-    src: 'https://images.unsplash.com/photo-1547153760-18fc86324498?w=800&q=80',
-    alt: 'バレエ発表会 - 発表会本番',
+    id: 'ballet-02',
+    src: 'https://picsum.photos/seed/ballet-02/800/534',
+    alt: 'バレエ発表会 群舞のフォーメーション',
     category: 'ballet',
     width: 800,
     height: 534,
   },
   {
-    id: 'ballet-5',
-    src: 'https://images.unsplash.com/photo-1611420576585-5ceac7c8c57c?w=800&q=80',
-    alt: 'バレエ発表会 - クラシックバレエ',
+    id: 'ballet-03',
+    src: 'https://picsum.photos/seed/ballet-03/800/1067',
+    alt: 'バレエ発表会 パ・ド・ドゥのリフト',
     category: 'ballet',
     width: 800,
     height: 1067,
   },
   {
-    id: 'ballet-6',
-    src: 'https://images.unsplash.com/photo-1578374173705-969cbe6f2d6b?w=800&q=80',
-    alt: 'バレエ発表会 - 舞台袖',
+    id: 'ballet-04',
+    src: 'https://picsum.photos/seed/ballet-04/800/534',
+    alt: 'バレエ発表会 開演前の舞台袖の様子',
     category: 'ballet',
     width: 800,
     height: 534,
   },
-  // ── 音楽発表会 ──────────────────────────────────────
   {
-    id: 'music-1',
-    src: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80',
-    alt: '音楽発表会 - ピアノ演奏',
+    id: 'ballet-05',
+    src: 'https://picsum.photos/seed/ballet-05/800/1200',
+    alt: 'バレエ発表会 スポットライトの中のアラベスク',
+    category: 'ballet',
+    width: 800,
+    height: 1200,
+  },
+  {
+    id: 'ballet-06',
+    src: 'https://picsum.photos/seed/ballet-06/800/534',
+    alt: 'バレエ発表会 フィナーレのカーテンコール',
+    category: 'ballet',
+    width: 800,
+    height: 534,
+  },
+  {
+    id: 'ballet-07',
+    src: 'https://picsum.photos/seed/ballet-07/800/1067',
+    alt: 'バレエ発表会 トウシューズで立つダンサー',
+    category: 'ballet',
+    width: 800,
+    height: 1067,
+  },
+  {
+    id: 'ballet-08',
+    src: 'https://picsum.photos/seed/ballet-08/800/534',
+    alt: 'バレエ発表会 子どもたちの群舞',
+    category: 'ballet',
+    width: 800,
+    height: 534,
+  },
+  // ── 音楽発表会 ──────────────────────────────────
+  {
+    id: 'music-01',
+    src: 'https://picsum.photos/seed/music-01/800/534',
+    alt: '音楽発表会 グランドピアノでの独奏',
     category: 'music',
     width: 800,
     height: 534,
   },
   {
-    id: 'music-2',
-    src: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&q=80',
-    alt: '音楽発表会 - ステージ演奏',
+    id: 'music-02',
+    src: 'https://picsum.photos/seed/music-02/800/1200',
+    alt: '音楽発表会 ヴァイオリンを構える奏者',
+    category: 'music',
+    width: 800,
+    height: 1200,
+  },
+  {
+    id: 'music-03',
+    src: 'https://picsum.photos/seed/music-03/800/534',
+    alt: '音楽発表会 弦楽アンサンブルの演奏',
     category: 'music',
     width: 800,
     height: 534,
   },
   {
-    id: 'music-3',
-    src: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&q=80',
-    alt: '音楽発表会 - 弦楽器',
+    id: 'music-04',
+    src: 'https://picsum.photos/seed/music-04/800/1067',
+    alt: '音楽発表会 ステージ照明の中のピアニスト',
     category: 'music',
     width: 800,
     height: 1067,
   },
   {
-    id: 'music-4',
-    src: 'https://images.unsplash.com/photo-1415886813400-10ade9a4a4ff?w=800&q=80',
-    alt: '音楽発表会 - 弦楽四重奏',
+    id: 'music-05',
+    src: 'https://picsum.photos/seed/music-05/800/534',
+    alt: '音楽発表会 演奏後のお辞儀の場面',
     category: 'music',
     width: 800,
     height: 534,
   },
   {
-    id: 'music-5',
-    src: 'https://images.unsplash.com/photo-1501612780327-45045538702b?w=800&q=80',
-    alt: '音楽発表会 - コンサート',
+    id: 'music-06',
+    src: 'https://picsum.photos/seed/music-06/800/1067',
+    alt: '音楽発表会 鍵盤に向かう手元のクローズアップ',
+    category: 'music',
+    width: 800,
+    height: 1067,
+  },
+  {
+    id: 'music-07',
+    src: 'https://picsum.photos/seed/music-07/800/534',
+    alt: '音楽発表会 客席から見たホール全景',
     category: 'music',
     width: 800,
     height: 534,
   },
   {
-    id: 'music-6',
-    src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80',
-    alt: '音楽発表会 - ライブパフォーマンス',
+    id: 'music-08',
+    src: 'https://picsum.photos/seed/music-08/800/1200',
+    alt: '音楽発表会 緊張の面持ちで出番を待つ出演者',
     category: 'music',
     width: 800,
-    height: 1067,
-  },
-  // ── イベント ──────────────────────────────────────
-  {
-    id: 'event-1',
-    src: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
-    alt: 'イベント撮影 - セレモニー',
-    category: 'event',
-    width: 800,
-    height: 534,
-  },
-  {
-    id: 'event-2',
-    src: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80',
-    alt: 'イベント撮影 - スピーカー',
-    category: 'event',
-    width: 800,
-    height: 534,
-  },
-  {
-    id: 'event-3',
-    src: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80',
-    alt: 'イベント撮影 - パーティー',
-    category: 'event',
-    width: 800,
-    height: 1067,
-  },
-  {
-    id: 'event-4',
-    src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80',
-    alt: 'イベント撮影 - アウトドアイベント',
-    category: 'event',
-    width: 800,
-    height: 534,
-  },
-  {
-    id: 'event-5',
-    src: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80',
-    alt: 'イベント撮影 - 会場全体',
-    category: 'event',
-    width: 800,
-    height: 534,
-  },
-  {
-    id: 'event-6',
-    src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80',
-    alt: 'イベント撮影 - チームフォト',
-    category: 'event',
-    width: 800,
-    height: 1067,
+    height: 1200,
   },
 ];

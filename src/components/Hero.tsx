@@ -15,11 +15,6 @@ export default function Hero() {
             {siteConfig.photographerName}
           </h1>
         </FadeIn>
-        <FadeIn delay={300}>
-          <p className="text-sm sm:text-base font-light tracking-[0.15em] text-neutral-600 leading-loose">
-            {siteConfig.tagline}
-          </p>
-        </FadeIn>
         <FadeIn delay={500} className="mt-20">
           <a
             href="#gallery"

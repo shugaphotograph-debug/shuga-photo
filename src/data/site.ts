@@ -5,16 +5,13 @@
 
 export const siteConfig = {
   // サイト名（ヘッダー・フッター・メタ情報に使用）
-  siteName: 'SHUGA PHOTOGRAPHY',
+  siteName: '写真家 千葉秀河',
 
   // 写真家名
-  photographerName: 'SHUGA',
-
-  // キャッチコピー（ヒーローに表示）
-  tagline: '舞台の上の、一瞬のきらめきを。',
+  photographerName: '千葉秀河',
 
   // 肩書き・拠点
-  title: '東京 ／ バレエ・音楽発表会 撮影',
+  title: '東京 ／ 舞台、舞踊、音楽撮影 ／ 発表会撮影',
 
   // メタ情報（SEO・OGP）
   description:

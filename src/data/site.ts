@@ -33,7 +33,7 @@ export const siteConfig = {
   contactFormUrl: '',
 
   // 発表会の写真購入（注文サイト）のURL。実際の注文サイトURLに差し替えてください。空文字なら導線非表示
-  photoOrderUrl: 'https://example.com/order',
+  photoOrderUrl: 'https://stage-flight.com/',
 
   // SNSリンク（リンク先を差し替えてください）
   sns: {

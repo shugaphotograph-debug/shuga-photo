@@ -76,6 +76,21 @@ export default function Contact() {
             </a>
           </div>
         </FadeIn>
+
+        {siteConfig.photoOrderUrl && (
+          <FadeIn delay={450}>
+            <p className="mt-16 text-[0.65rem] sm:text-xs font-light tracking-[0.15em] text-neutral-500">
+              <a
+                href={siteConfig.photoOrderUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-4 decoration-neutral-700 hover:text-neutral-300 transition-colors"
+              >
+                発表会の写真購入をご希望の方はこちら
+              </a>
+            </p>
+          </FadeIn>
+        )}
       </div>
     </section>
   );

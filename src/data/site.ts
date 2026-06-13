@@ -27,10 +27,13 @@ export const siteConfig = {
   ogImage: 'https://picsum.photos/seed/shuga-og/1200/630',
 
   // 問い合わせ先メールアドレス
-  contactEmail: 'shuga.photograph@gmail.com',
+  contactEmail: 'info@shuga-photography.com',
 
   // 問い合わせフォームのURL（Googleフォーム等を使う場合はここに設定。空文字ならボタン非表示）
   contactFormUrl: '',
+
+  // 発表会の写真購入（注文サイト）のURL。実際の注文サイトURLに差し替えてください。空文字なら導線非表示
+  photoOrderUrl: 'https://example.com/order',
 
   // SNSリンク（リンク先を差し替えてください）
   sns: {
